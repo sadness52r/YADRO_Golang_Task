@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"time"
 )
 
 type Config struct {
-	Laps        int    `json:"laps"`
-	LapLen      int    `json:"lapLen"`
-	PenaltyLen  int    `json:"penaltyLen"`
-	FiringLines int    `json:"firingLines"`
-	Start       string `json:"start"`       
-	StartDelta  string `json:"startDelta"`
+	Laps        uint32     `json:"laps"`
+	LapLen      float32    `json:"lapLen"`
+	PenaltyLen  float32    `json:"penaltyLen"`
+	FiringLines uint32     `json:"firingLines"`
+	Start       time.Time  `json:"start"`       
+	StartDelta  time.Time  `json:"startDelta"`
 }
 
 var AppConfig *Config

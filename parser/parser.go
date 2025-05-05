@@ -5,10 +5,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"yadro_golang_task/model"
+	//"yadro_golang_task/api/model"
+	"yadro_golang_task/api/handlers"
 )
 
-func ParseLine(line string) (*model.Request, error) {
+func ParseLine(line string) (*biathlon.Request, error) {
 	parts := strings.Fields(line)
 	if len(parts) < 3 {
 		return nil, fmt.Errorf("parsing err : not enough parameters : %s", line)
@@ -54,9 +55,9 @@ func ParseLine(line string) (*model.Request, error) {
 		extra = append(extra, p)
 	}
 
-	return &model.Request{
-		Time:    timestamp,
-		EventID:      model.EventID(eventID),
+	return &biathlon.Request{
+		Time:         timestamp,
+		EventID:      biathlon.EventID(eventID),
 		CompetitorID: uint32(competitorID),
 		ExtraParams:  extra,
 	}, nil
