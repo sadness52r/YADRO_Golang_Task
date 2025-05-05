@@ -7,8 +7,8 @@ import (
     "log"
     "os"
     //"strings"
-	"yadro_golang_task/model"
-	//"yadro_golang_task/handler"
+	//"yadro_golang_task/api/model"
+	"yadro_golang_task/api/handlers"
 	"yadro_golang_task/parser"
 )
 
@@ -26,7 +26,7 @@ func main() {
     }
     defer file.Close()
 
-    requests := make([]*model.Request, 0)
+    requests := make([]*biathlon.Request, 0)
     scanner := bufio.NewScanner(file)
     for scanner.Scan() {
         req, err := parser.ParseLine(scanner.Text())
@@ -34,10 +34,15 @@ func main() {
             log.Fatalf("error : %v", err)
         }
         requests = append(requests, req)
-        //handler.Dispatch(req)
     }
 
     if err := scanner.Err(); err != nil {
         log.Fatal(err)
+    }
+
+    // Обработка запросов
+    handler := biathlon.NewBiathlonHandler()
+    for _, req := range requests {
+        biathlon.Dispatch(req, handler)
     }
 }
