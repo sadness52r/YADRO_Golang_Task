@@ -1,7 +1,6 @@
 package biathlon
 
 import (
-	//"yadro_golang_task/api/model"
 	"yadro_golang_task/api"
 	"log"
 )
@@ -24,7 +23,9 @@ func Dispatch(req *Request, h *BiathlonHandler) {
     if handler, ok := eventHandlers[req.EventID]; ok {
         response := handler(req)
 		if response.Err != nil {
-			log.Fatal(response.Err)
+			log.Fatal(response.DeveloperMessage)
+		} else {
+			log.Println(response.UserMessage)
 		}
     } else {
         log.Fatal("unknown event ID : ", req.EventID)

@@ -7,7 +7,8 @@ import (
     "log"
     "os"
     //"strings"
-	//"yadro_golang_task/api/model"
+	"yadro_golang_task/api/model"
+    managers "yadro_golang_task/managers"
 	"yadro_golang_task/api/handlers"
 	"yadro_golang_task/parser"
 )
@@ -18,7 +19,7 @@ const (
 )
 
 func main() {
-    config.LoadConfig(CONFIG_PATH)
+    cfg := config.LoadConfig(CONFIG_PATH)
 
 	file, err := os.Open(EVENTS_PATH)
     if err != nil {
@@ -41,8 +42,17 @@ func main() {
     }
 
     // Обработка запросов
-    handler := biathlon.NewBiathlonHandler()
+    var competitors = make(map[uint32]*model.Competitor)
+
+    manager := managers.NewBiathlonManager(competitors, cfg)
+    handler := biathlon.NewBiathlonHandler(manager)
     for _, req := range requests {
         biathlon.Dispatch(req, handler)
+    }
+    status := handler.HandleGetStatus()
+    if status.Err != nil {
+        log.Fatal(status.DeveloperMessage)
+    } else {
+        log.Println(status.UserMessage)
     }
 }
