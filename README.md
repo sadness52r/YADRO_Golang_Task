@@ -1,3 +1,10 @@
+# Инструкция по запуску
+1) *go mod download*
+2) *go run .\main.go*
+## Запуск тестов
+- *cd tests*
+- *go test*
+
 # System prototype for biathlon competitions
 The prototype must be able to work with a configuration file and a set of external events of a certain format.
 Solution should contain golang (1.20 or newer) source file/files and unit tests (optional)
